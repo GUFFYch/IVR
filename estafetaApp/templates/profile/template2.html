@@ -35,7 +35,7 @@
                         <h3 class="uk-card-title">{{team.name}}</h3>
                         <form method="POST">
                             {% csrf_token %}
-                            <button class="uk-button uk-button-danger" type="submit" name="leaveTeam">Выфти</button>
+                            <button class="uk-button uk-button-danger" type="submit" name="leaveTeam">Выйти</button>
                         </form>
                     </div>
                 </div>
@@ -113,6 +113,14 @@
                             <div class="uk-form-controls">
                                 <input class="uk-input" maxlength="50" name="name" type="text"
                                     placeholder="Team name..." required>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label">Количесвто игроков в команде</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" max="50" name="amount" type="number"
+                                    placeholder="" required>
                             </div>
                         </div>
 

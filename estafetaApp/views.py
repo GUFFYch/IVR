@@ -14,9 +14,10 @@ import xlrd
 import csv
 import pandas as pd
 
+# table generator
 def table_page(request):
     content = {}
-    if request.user.is_authenticated and request.user.is_admin:
+    if request.user.is_authenticated:
         if request.FILES:
             excel_file = request.FILES["excel_file"]
 
@@ -44,6 +45,7 @@ def table_page(request):
     else:
         return HttpResponseRedirect('/')
 
+# func for showing 
 def profile_page(request):
     content = {}
     if request.user.is_authenticated:
@@ -55,6 +57,10 @@ def profile_page(request):
                 team = Team()
                 team.name = request.POST['name']
                 team.password = request.POST['password']
+                team.players_amount = request.POST['amount']
+                team.games_played = 0
+                team.wins = 0
+                team.loses = 0
                 team.save()
                 person.team = request.POST['name']
                 person.save()
@@ -78,7 +84,7 @@ def profile_page(request):
     else:
         return render(request, 'notadmin.html')
 
-
+# rendering template page of profile
 def profileTemplate_page(request, name):
     content = {}
     if request.user.is_authenticated:
@@ -93,20 +99,22 @@ def profileTemplate_page(request, name):
     else:
         return HttpResponseRedirect('/singin')    
 
-
+# func to outp all teams
 def searchTeam_page(request, name):
     content = {}
     content['teams'] =  Team.objects.filter(name__icontains=name)
     return render(request, 'outpLists/teamslist.html', content)
 
+# func to outp all tests
 def searchTest_page(request, name):
     content = {}
     content['tests'] =  Tests.objects.filter(name__icontains=name)
     print(content['tests'])
     return render(request, 'outpLists/testslist.html', content)
 
+# func to create test
 def createtest_page(request):
-    if request.user.is_authenticated and request.user.is_admin:
+    if request.user.is_authenticated:
         if request.method == 'POST' and 'submitBtn' in request.POST:
             test_text = ''
             test_answer = ''
@@ -173,7 +181,7 @@ def test_apge(request, name):
 
 
 def finishtest_page(request):
-    if request.user.is_authenticated and request.user.is_admin:
+    if request.user.is_authenticated:
         if request.method == 'POST':
             print(request.POST)
 
