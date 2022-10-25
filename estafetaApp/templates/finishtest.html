@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estafeta</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+    {% include 'menu.html' %}
+    <form method="POST" enctype="multipart/form-data">
+        <h1 class="uk-text-center" style="margin: 1% auto">Finish test</h1>
+        <div class="uk-width-3-5" style="margin: 2% auto">
+            <fieldset class="uk-fieldset">
+
+                <div class="uk-flex uk-flex-top uk-flex-between uk-text-center uk-margin-medium-bottom">
+
+                    <div class="uk-width-1-2 uk-text-left">
+                        <label>name</label>
+                        <br>
+                        <input type="text" name="name" placeholder="name of test" id="searchPole"
+                            class="uk-input uk-width-5-6" maxlength="100" required>
+                    </div>
+                    <div class="uk-width-1-2" id="testsList">
+
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="uk-width-3-5" style="margin: 2% auto">
+            {% csrf_token %}
+            <!-- <div uk-form-custom="target: true" class="uk-wid">
+                <input type="file">
+                <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" name="excel_file"
+                    required="required">
+            </div>
+            <button class="uk-button uk-button-default" name="Upload" type="submit">Submit</button> -->
+            <hr>
+
+            <input type="file"
+                   title="Upload excel file"
+                   name="excel_file"
+                   style="border: 1px solid black; padding: 5px;"
+                   required="required">
+            <p>
+            <input type="submit"
+                   value="Upload"
+                   style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
+
+            
+        </div>
+    </form>
+
+
+</body>
+
+</html>
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit-icons.min.js"></script>
+<script>
+    $("#searchPole").on('input', function () {
+        var xhr = new XMLHttpRequest()
+        if (this.value) {
+            xhr.open('GET', `/searchtest/${this.value}/`)
+            xhr.onload = function () {
+                $('#testsList').html(xhr.response)
+            }
+            xhr.send()
+        }
+    });
+</script>

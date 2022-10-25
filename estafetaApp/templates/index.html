@@ -1,0 +1,473 @@
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyQuest</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
+    <script src="https://kit.fontawesome.com/24656403b4.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    {% include 'menu.html' %}
+
+
+    <!-- section start -->
+    <div class="uk-section uk-text-center uk-margin">
+
+        <h1>Estafeta Contests</h1>
+
+        <p class="uk-text-meta">A platform to compete in school subjects</p>
+        <div class="uk-flex uk-flex-middle uk-flex-center uk-width-1-4" style="margin: 2% auto">
+            <a href="/signin/" class="uk-button uk-button-primary uk-border-rounded uk-width-1-3 uk-margin-right">Get started</a>
+            <button class="uk-button uk-button-default uk-border-rounded uk-width-1-3 uk-margin-left">Lern more</button>
+        </div>
+        <img src="{% static "images/estafeta_index_1.jpg" %}">
+        </img>
+    </div>
+    <!-- section end -->
+
+    <!-- section start -->
+    <div class="uk-section uk-text-center uk-margin uk-width-4-5"
+        style="margin: 0 auto 2% auto; border-radius: 20px; background-color: #F7F7FB;">
+        <h1>Our subjects</h1>
+        <p class="uk-text-meta">Choose subject you want and challenge yourself</p>
+        <div class="uk-flex uk-flex-middle uk-flex-center uk-width-1-4" style="margin: 2% auto">
+            <p class="uk-width-auto" style="margin: 0 5% 0 0">Choose your country</p>
+            <select class="uk-select uk-border-pill uk-width-auto">
+                <option>🇺🇸 USA</option>
+                <option>🇷🇺 RUS</option>
+                <option>🇧🇷 BRA</option>
+                <option>🇬🇧 GBR</option>
+            </select>
+        </div>
+        <!-- <p>{% static "images/estafeta_logo_Maths.jpg" %}</p> -->
+
+        <div class="uk-flex uk-flex-middle uk-flex-center uk-width-4-5" style="margin: 0 auto">
+            <!-- card start -->
+            <div class="uk-card uk-card-default uk-width-1-4" style="margin: 0 2%;border: 0px; border-radius: 20px;">
+                <div class="uk-card-header" style="border: none">
+                    <div class="uk-flex uk-flex-left uk-flex-middle " style="border: none">
+                        <div class="uk-width-auto uk-margin-medium-right">
+                            <img class="uk-border-circle" width="40" height="40"
+                                src="{% static "images/estafeta_logo_Maths.jpg" %}">
+                        </div>
+                        <div class="uk-width-auto">
+                            <h3 class="uk-card-title uk-margin-remove-bottom">Maths</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card-body uk-text-left" style="border: none">
+                    <ul uk-nav>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-regular fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>Moscow Cup</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-regular fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>Moscow SuperLeague</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-regular fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>São Paulo Cup</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-regular fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>São Paulo SuperLeague</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-regular fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>Up to 5 team members</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-card-footer" style="border: none">
+                    <a href="/signin/" class="uk-button uk-button-primary uk-border-rounded ">Get started</a>
+                </div>
+            </div>
+            <!-- card end -->
+
+            <!-- card start -->
+            <div class="uk-card uk-card-primary uk-width-1-4" style="margin: 0 2%;border: 0px; border-radius: 20px;">
+                <div class="uk-card-header" style="border: none">
+                    <div class="uk-flex uk-flex-left uk-flex-middle " style="border: none">
+                        <div class="uk-width-auto uk-margin-medium-right">
+                            <img class="uk-border-circle" width="40" height="40"
+                                src="{% static "images/estafeta_logo_Economics.jpg" %}">
+                        </div>
+                        <div class="uk-width-auto">
+                            <h3 class="uk-card-title uk-margin-remove-bottom">Economics</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card-body uk-text-left" style="border: none">
+                    <ul uk-nav>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-solid fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>Moscow Cup</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-solid fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>Moscow SuperLeague</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-solid fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>São Paulo Cup</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-solid fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>São Paulo SuperLeague</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-solid fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>Up to 5 team members</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-card-footer" style="border: none">
+                    <a href="/signin/" class="uk-button uk-button-primary uk-border-rounded" style="color: blue">Get
+                        started</a>
+                </div>
+            </div>
+            <!-- card end -->
+
+            <!-- card start -->
+            <div class="uk-card uk-card-default uk-width-1-4" style="margin: 0 2%;border: 0px; border-radius: 20px;">
+                <div class="uk-card-header" style="border: none">
+                    <div class="uk-flex uk-flex-left uk-flex-middle " style="border: none">
+                        <div class="uk-width-auto uk-margin-medium-right">
+                            <img class="uk-border-circle" width="40" height="40"
+                                src="{% static "images/estafeta_logo_Chemistry.jpg" %}">
+                        </div>
+                        <div class="uk-width-auto">
+                            <h3 class="uk-card-title uk-margin-remove-bottom">Physics</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card-body uk-text-left" style="border: none">
+                    <ul uk-nav>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-regular fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>Moscow Cup</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-regular fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>Moscow SuperLeague</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-regular fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>São Paulo Cup</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-regular fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>São Paulo SuperLeague</p>
+                        </li>
+                        <li class="uk-active uk-flex uk-flex-middle"><i
+                                class="fa-regular fa-circle-check uk-margin-small-right" style="font-size: 20px;"></i>
+                            <p>Up to 5 team members</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-card-footer" style="border: none">
+                    <a href="/signin/" class="uk-button uk-button-primary uk-border-rounded ">Get started</a>
+                </div>
+            </div>
+            <!-- card end -->
+        </div>
+    </div>
+    <!-- section end -->
+
+    <!-- section start -->
+    <div class="uk-width-3-5 uk-height-medium uk-flex uk-flex-around uk-flex-middle uk-background-cover uk-light"
+        data-src="{% static "images/estafeta_index_2.jpg" %}" uk-img
+        style="margin: 10% auto; padding: 2% 5%; border-radius: 20px;">
+        <h2 class="uk-width-1-2 uk-text-break uk-margin-remove">Create your own team to compete in
+            one of our
+            tournaments </h2>
+        <a href="/signin/" class="uk-button uk-button-default uk-border-rounded">Create a Team</a>
+    </div>
+    <!-- section end -->
+
+    <!-- section start -->
+    <div class="uk-section uk-text-center uk-margin uk-width-4-5" style="margin: 0 auto">
+        <p class="uk-text-primary" id="about">ABOUT US</p>
+        <h1>Information on contests format</h1>
+        <!-- cards section start -->
+        <div class="uk-flex uk-flex-middle uk-flex-between uk-width-3-5" style="margin: 2% auto">
+            <!-- card-start -->
+            <div class="uk-flex uk-flex-center uk-flex-middle uk-width-auto"
+                style="border-radius: 20px; border: 1px solid blue; padding: 2%; margin: 2%">
+                <div class="uk-margin-small-right">
+                    <img class="uk-border-circle" style="height: 40px; width: 40px"
+                        src="{% static "images/estafeta_logo_tournaments.jpg" %}">
+                </div>
+                <div>
+                    <p class="uk-card-title uk-margin-remove-bottom uk-text-small">Tournaments</p>
+                </div>
+            </div>
+            <!-- card end -->
+
+            <!-- card-start -->
+            <div class="uk-flex uk-flex-center uk-flex-middle uk-width-auto"
+                style="border-radius: 20px; border: 1px solid blue; padding: 2%; margin: 2%">
+                <div class="uk-margin-small-right">
+                    <img class="uk-border-circle" style="height: 40px; width: 40px"
+                        src="{% static "images/estafeta_logo_Economics.jpg" %}">
+                </div>
+                <div>
+                    <p class="uk-card-title uk-margin-remove-bottom uk-text-small"> Contests</p>
+                </div>
+            </div>
+            <!-- card end -->
+
+            <!-- card-start -->
+            <div class="uk-flex uk-flex-center uk-flex-middle uk-width-auto"
+                style="border-radius: 20px; border: 1px solid blue; padding: 2%; margin: 2%">
+                <div class="uk-margin-small-right">
+                    <img class="uk-border-circle" style="height: 40px; width: 40px"
+                        src="{% static "images/estafeta_logo_league.jpg" %}">
+                </div>
+                <div>
+                    <p class="uk-card-title uk-margin-remove-bottom uk-text-small">SuperLeague&Cup</p>
+                </div>
+            </div>
+            <!-- card end -->
+
+            <!-- card-start -->
+            <div class="uk-flex uk-flex-center uk-flex-middle uk-width-auto"
+                style="border-radius: 20px; border: 1px solid blue; padding: 2%; margin: 2%">
+                <div class="uk-margin-small-right">
+                    <img class="uk-border-circle" style="height: 40px; width: 40px"
+                        src="{% static "images/estafeta_logo_teams.jpg" %}">
+                </div>
+                <div>
+                    <p class="uk-card-title uk-margin-remove-bottom uk-text-small">Teams</p>
+                </div>
+            </div>
+            <!-- card end -->
+        </div>
+        <!-- cards section end -->
+
+        <!-- tournaments section end -->
+        <div class="uk-flex uk-flex-middle uk-flex-around uk-card uk-card-default uk-width-3-5"
+            style="border-radius: 20px; margin: 0 auto;">
+            <div class="uk-card uk-width-1-2">
+                <div class="uk-card-header" style="margin-bottom: 0px; border: none">
+                    <div class="uk-text-left">
+                        <div class="uk-width-auto uk-margin-medium-bottom">
+                            <img style="border-radius: 20px" width="50" height="50"
+                                src="{% static "images/estafeta_logo_Economics.jpg" %}">
+                        </div>
+                        <div class="uk-width-expand">
+                            <h3 class="uk-card-title uk-margin-remove-bottom">Tournaments</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card-body uk-text-left" style="padding-top: 0px; padding-bottom: 1%;">
+                    <p>We have a system of leagues with multiple divisions, like there are in sports. But instead of
+                        sports our platform provides an opportunity to compete in school subjects.
+                        There are two types of competitions, 3 cities and 4 subjects, choose yours and join a
+                        tournament!</p>
+                </div>
+                <div class="uk-card-footer uk-text-left" style="border: none; padding-top: 1%px;">
+                    <a href="#" class="uk-button uk-button-text">Learn more</a>
+                </div>
+            </div>
+            <div class="uk-flex-row uk-width-1-4">
+                <img src="{% static "images/estafeta_index_3_1.jpg" %}"></img>
+                <img src="{% static "images/estafeta_index_3_2.jpg" %}"></img>
+            </div>
+            <div class=" uk-width-1-4">
+                <img src="{% static "images/estafeta_index_3_3.jpg" %}"></img>
+            </div>
+        </div>
+        <!-- tournaments section end -->
+
+        <h1>Our results in numbers</h1>
+        <div class="uk-card uk-card-default uk-flex uk-flex-around uk-flex-middle uk-width-3-5"
+            style="border-radius: 20px; margin: 0 auto">
+            <div class="uk-flex-row">
+                <h1>8</h1>
+                <p>Countries</p>
+            </div>
+            <div class="uk-flex-row">
+                <h1>5</h1>
+                <p>Subjects</p>
+            </div>
+            <div class="uk-flex-row">
+                <h1>125</h1>
+                <p>Competitors</p>
+            </div>
+            <div class="uk-flex-row">
+                <h1>32</h1>
+                <p>Team members</p>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- section end -->
+
+    <!-- section start -->
+    <div class="uk-section uk-text-center uk-margin uk-width-3-5" style="margin: 0 auto">
+        <div class="uk-flex uk-flex-between uk-flex-middle">
+            <div class="uk-text-left">
+                <h1>Estafeta Contests</h1>
+                <p class="uk-text-meta">A platform to compete in school subjects</p>
+            </div>
+            <a href="/signin/" class="uk-button uk-button-primary" style="border-radius: 20px;">More information</a>
+        </div>
+        <div class="uk-flex-row">
+
+
+            <div class="uk-width-1 uk-flex uk-flex-middle uk-flex-between">
+                <div class="uk-card uk-card-default uk-width-2-5 uk-grid-margin" style="border-radius: 20px;">
+                    <div class="uk-card-header" style="margin-bottom: 0px; border: none">
+                        <div class="uk-text-left">
+                            <div class="uk-width-expand">
+                                <h3 class="uk-card-title uk-margin-remove-bottom">Ali Ismailov</h3>
+                                <p class="uk-text-meta uk-margin-remove-top">CEO & Co-Founder</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body uk-text-left" style="padding-top: 0px; padding-bottom: 1%;">
+                        <p>Great economist, with extensive knowledge and years of experience, working in perspective
+                            startups. Future freshman of the UCLA Faculty of Business.</p>
+                    </div>
+                    <div class="uk-card-footer uk-flex uk-flex-middle uk-flex-between"
+                        style="border: none; padding-top: 1%px;">
+                        <div class="uk-flex uk-flex-middle uk-flex-right uk-width-1">
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-discord"></a>
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-vk"></a>
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-instagram"></a>
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-telegram"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-width-1 uk-flex uk-flex-middle uk-flex-between">
+                <div class="uk-width-3-5"></div>
+                <div class="uk-card uk-card-default uk-width-2-5 uk-grid-margin" style="border-radius: 20px;">
+                    <div class="uk-card-header" style="margin-bottom: 0px; border: none">
+                        <div class="uk-text-left">
+                            <div class="uk-width-expand">
+                                <h3 class="uk-card-title uk-margin-remove-bottom">Nikita Belavin</h3>
+                                <p class="uk-text-meta uk-margin-remove-top"> Co-Founder of Economics</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body uk-text-left" style="padding-top: 0px; padding-bottom: 1%;">
+                        <p>Good economist, with extensive knowledge and years of experience. Ranked fifth in the 2022
+                            IEO olympiad</p>
+                    </div>
+                    <div class="uk-card-footer uk-flex uk-flex-middle uk-flex-between"
+                        style="border: none; padding-top: 1%px;">
+                        <div class="uk-flex uk-flex-middle uk-flex-right uk-width-1">
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-discord"></a>
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-vk"></a>
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-instagram"></a>
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-telegram"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-width-1 uk-flex uk-flex-middle uk-flex-between">
+                <div class="uk-card uk-card-default uk-width-2-5 uk-grid-margin" style="border-radius: 20px;">
+                    <div class="uk-card-header" style="margin-bottom: 0px; border: none">
+                        <div class="uk-text-left">
+                            <div class="uk-width-expand">
+                                <h3 class="uk-card-title uk-margin-remove-bottom">Grigorii Tkachenko</h3>
+                                <p class="uk-text-meta uk-margin-remove-top"> Co-Founder of Math</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body uk-text-left" style="padding-top: 0px; padding-bottom: 1%;">
+                        <p>Good mathematician, with some knowledge and months of experience.</p>
+                    </div>
+                    <div class="uk-card-footer uk-flex uk-flex-middle uk-flex-between"
+                        style="border: none; padding-top: 1%px;">
+                        <div class="uk-flex uk-flex-middle uk-flex-right uk-width-1">
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-discord"></a>
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-vk"></a>
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-instagram"></a>
+                            <a href=""
+                                style="margin: 0 2%; padding: 2%; background-color: blue; color: white; border-radius: 50px;"
+                                class="uk-button fa-brands fa-telegram"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section end -->
+
+    <!-- section start -->
+    <div class="uk-section uk-card uk-card-primary uk-text-center uk-width-3-5"
+        style="margin: 0 auto; padding: 5%; border-radius: 20px;">
+        <h1 style="color: white">Interested in Working with Us? </h1>
+        <p class="uk-width-3-5 uk-text-break" style="margin: 2% auto; color: white">Join our project and become a part
+            of something
+            bigger than just contests. Get in touch with is and we will get back to you within 1-2 business days.</p>
+        <a href="mailto:google@mail.ru" class="uk-button" style="color: blue; background-color: white; border-radius: 20px; padding: 0.5% 3%">
+            <i class="fa-regular fa-envelope uk-margin-small-right"></i> Get in touch</a>
+    </div>
+    <!-- section end -->
+
+    <div style="float: right; position: relative; right: 15%">
+        <img src="{% static "images/estafeta_index_7.jpg" %}" style="z-index: -1; height: 500px; width: 500px;"></img>
+    </div>
+    <!-- section start -->
+    <div class="section uk-width-1 uk-light" style="margin-top: 10%; background-color: blue;">
+        <div class="uk-card uk-width-4-5" style="z-index: 1; padding-top: 10%">
+            <div class="uk-flex uk-flex-center uk-flex-middle uk-width-auto" style="margin-bottom: 10%;">
+                <div>
+                    <h1 class="uk-margin-large-bottom uk-text-bold" style="color: white">Ready to get started?</h1>
+                    <a href="/signin/" class="uk-button uk-button-primary"
+                        style="border-radius: 20px; padding: 1% 5%; color: blue">KICKSTART YOUR
+                        FUTURE</a>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-1 uk-flex uk-flex-around uk-flex-middle" style="background-color: blue">
+            <p style="color: white"> <img src="{% static "images/estafeta_logo.jpg" %}" class="uk-border-circle"
+                    style="border:1px solid white" width="40" height="40" alt=""> Academy</p>
+            <p style="color: white">© 2022 Academy, Inc. All Rights Reserved. </p>
+        </div>
+    </div>
+    <!-- section end -->
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/js/uikit-icons.min.js"></script>
+
+</html>

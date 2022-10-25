@@ -1,0 +1,30 @@
+{% load static %}
+
+<nav class="uk-navbar-container uk-width-4-5" style="margin: 0 auto; background-color: rgba(255,255,255,0);" uk-navbar>
+    <div class="uk-navbar-left">
+        <ul class="uk-navbar-nav">
+            <li class="uk-active"><a href="/"><img src="" class="uk-border-circle" style="border:1px solid white"
+                        width="40" height="40" alt="">OnlyQuests</a></li>
+        </ul>
+    </div>
+
+    <div class="uk-navbar-center">
+        <ul class="uk-navbar-nav">
+            <li class="uk-active"><a href="/">Турниру</a></li>
+            <li class="uk-active"><a href="/results/">Результаты</a></li>
+        </ul>
+    </div>
+
+    <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav uk-flex uk-flex-middle uk-margin-small-right">
+            {% if user.is_authenticated %}
+            <a href="/profile/" class="uk-icon-button uk-button-default" uk-icon="user" style="margin-left: 3%;"></a>
+            <li class="uk-active">
+                <a href="/logout/" uk-icon="icon:  sign-out"></a>
+            </li>
+            {% else %}
+            <a href="/signin/" class="uk-icon-button uk-button-default" uk-icon="user" style="margin-left: 3%;"></a>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

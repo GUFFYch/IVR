@@ -1,0 +1,42 @@
+<!-- <p>{{teams}}</p> -->
+
+{% for team in teams %}
+<div class="uk-card uk-flex uk-flex-between uk-width-1">
+    <h3>{{team.name}}</h>
+        <a class="uk-button uk-label uk-label-success uk-button-link" href="#join-submition-{{team.name}}" uk-toggle> Вступить
+        </a>
+</div>
+<div uk-margin>
+
+    <div id="join-submition-{{team.name}}" uk-modal>
+        <div class="uk-modal-dialog">
+            <form method="POST" class="uk-form-horizontal uk-margin-large">
+
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+                <div class="uk-modal-header">
+                    <h2 class="uk-modal-title">join {{team.name}}</h2>
+                </div>
+                <div class="uk-modal-body">
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label">Team password</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" name="password" type="password"
+                                placeholder="****">
+                        </div>
+                    </div>
+
+
+                </div>
+                {% csrf_token %}
+                <div class="uk-modal-footer uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                    <button class="uk-button uk-button-primary" type="submit" value="{{team.name}}"
+                        name="joinTeam">Join</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endfor %}

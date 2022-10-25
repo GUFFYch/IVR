@@ -1,0 +1,100 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyQuest</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<style>
+    .container-main {
+        background: #FFFFFF;
+        border: 1px solid #EFF0F7;
+        box-shadow: 0px 5px 16px rgba(8, 15, 52, 0.06);
+        border-radius: 34px;
+        width: 30vw;
+        margin: auto;
+    }
+
+    .larg {
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 34px;
+        line-height: 46px;
+        text-align: center;
+        color: #170F49;
+    }
+
+    .small {
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 30px;
+        text-align: center;
+        margin: 0 auto;
+        color: #6F6C90;
+    }
+</style>
+
+<body>
+
+    {% load static %}
+
+    <div class="uk-width-2-5 uk-flex uk-flex-middle uk-flex-center" style="margin: 5% auto 0;">
+        <img class="uk-comment-avatar" src="" width="80" height="80" alt="">
+        <h1 class="uk-margin-remove uk-text-bold">OnlyQuests</h4>
+    </div>
+
+
+    <p class="larg">Войдите в ской аккаунт</p>
+    <br>
+    <br>
+    <br>
+    <div class="container-main">
+        <br>
+        <br>
+        <form method="POST" action="." id="signin-form" class="uk-width-4-5 uk-form-stacked" style=" margin: 0 auto;">
+            {% csrf_token %}
+            <div style="width: 80%; margin: 0 auto;">
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">Почта</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input uk-border-pill" id="form-stacked-text" type="email"
+                            placeholder="email@mail.com" name="email">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">Пароль</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input uk-border-pill" id="form-stacked-text" type="password" name="password"
+                            placeholder="Пароль...">
+                    </div>
+                </div>
+                <br>
+                <button class="uk-button uk-button-primary uk-border-pill uk-width-1 uk-margin" type="submit"
+                    name="btnform2">Войти</button>
+                <a class="uk-button uk-button-text uk-border-pill uk-width-1 uk-margin" href="/signin/">Зарегестрироватья</a>
+            </div>
+        </form>
+
+    </div>
+
+
+
+</body>
+
+
+</html>
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit-icons.min.js"></script>

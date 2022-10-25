@@ -1,0 +1,554 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<title>ESTAFETA</title>
+	<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
+	<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
+	<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+</head>
+
+<style>
+	*{
+		transform: 0.5s;
+	}
+	#regForm {
+		margin: 0px auto;
+		padding: 40px;
+		border-radius: 10px;
+	}
+
+	.tab {
+		display: none;
+	}
+
+	.all-steps {
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		text-align: center;
+		vertical-align: middle;
+		margin: 30px auto;
+		width: 50%;
+		height: 8px;
+		border-top: 1px solid;
+		border-bottom: 1px solid;
+		border-radius: 20px;
+	}
+
+	.all-steps::after {
+		border-radius: 200px;
+		background-color: blue;
+		content: '\A';
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: var(--width-nonstatic, 10%);
+		z-index: 1;
+	}
+
+	.step {
+		z-index: 2;
+		height: 25px;
+		width: 25px;
+		margin: 0px;
+		background-color: #bbbbbb;
+		border: 2px solid;
+		border-color: #bbbbbb;
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 15px;
+		opacity: 1;
+		transition: 0.2s;
+	}
+
+	.container-main {
+		background: #FFFFFF;
+		border: 1px solid #EFF0F7;
+		box-shadow: 0px 5px 16px rgba(8, 15, 52, 0.06);
+		border-radius: 34px;
+	}
+
+	.larg {
+		font-family: 'DM Sans';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 34px;
+		line-height: 46px;
+		text-align: center;
+		color: #170F49;
+	}
+
+	.small {
+		font-family: 'DM Sans';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 30px;
+		text-align: center;
+		color: #6F6C90;
+	}
+
+	.section-m {
+
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		gap: 20px;
+	}
+
+	.tile {
+		height: 20vh;
+		width: 30%;
+		position: relative;
+		background: #FFFFFF;
+		border: 1px solid #EFF0F7;
+		box-shadow: 0px 2px 6px rgba(19, 18, 66, 0.07);
+		border-radius: 16px;
+	}
+
+	.inp {
+		-webkit-appearance: none;
+		height: 100%;
+		width: 100%;
+		background-color: #ffffff;
+		border-radius: 10px;
+		cursor: pointer;
+		border: 3px solid transparent;
+		outline: none;
+		box-shadow: 15px 15px 25px rgba(2, 28, 53, 0.05);
+	}
+
+	.inp:after {
+		font-family: "Font Awesome 5 Free";
+		font-weight: 400;
+		content: "\f111";
+		font-size: 22px;
+		top: 10px;
+		left: 10px;
+		color: #e2e6f3;
+	}
+
+	.inp:hover {
+		transform: scale(1.08);
+	}
+
+	.inp:checked {
+		border: 3px solid #478bfb;
+	}
+
+	.inp:checked:after {
+		font-weight: 900;
+		content: "\f058";
+		color: #478bfb;
+	}
+
+	.lab {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+		height: 90%;
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+		cursor: pointer;
+	}
+
+	.lab .fas {
+		font-size: 60px;
+		color: #2c2c51;
+	}
+
+	.inp:checked+.lab .fas {
+		animation: grow 0.5s;
+	}
+
+	@keyframes grow {
+		50% {
+			font-size: 80px;
+		}
+	}
+
+	.lab h6 {
+		font-family: "Poppins", sans-serif;
+		font-size: 15px;
+		font-weight: 400;
+		color: #7b7b93;
+	}
+
+	.text-in {
+		font-family: 'DM Sans';
+		font-style: normal;
+		font-weight: 500;
+		font-size: 18px;
+		line-height: 20px;
+		color: #170F49;
+	}
+
+	.btn-sub {
+		background: #3434FF;
+		box-shadow: 0px 3px 12px rgba(74, 58, 255, 0.18);
+		border-radius: 56px;
+	}
+</style>
+
+
+<body style="width: 80%; margin: auto;">
+
+	<body>
+		<p class="larg">Создание аккаунта</p>
+		<p class="small">Пожалуйста заполните поля всей необходимой информацией</p>
+
+		<br>
+		<br>
+		<br>
+		<div class="container-main">
+
+			<div class="all-steps" id="all-steps">
+				<a style="background-color: #2652bf; border-color: #2652bf; color: white" class="step"
+					onclick="surTab(0)">1</a>
+				<a class="step" onclick="surTab(1)">2</a>
+				<a class="step" onclick="surTab(2)">3</a>
+				<a class="step" onclick="surTab(3)">4</a>
+			</div>
+
+			<hr>
+
+
+			<form id="regForm" class="uk-width-4-5" action="" method="POST">
+
+				<div class="tab" style="display: block">
+
+
+					<p class="uk-text-left larg" style="font-size: 24px;">Основная информация</h2>
+						<br>
+						<div class="uk-width-4-5 uk-flex uk-flex-between" style="margin: 0 auto">
+							<div class="">
+
+								<label class="uk-form-label" for="form-stacked-text">Имя</label>
+								<div class="uk-inline uk-form-controls" style="display: grid;">
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: user"></span>
+									<input class="uk-input uk-border-pill" type="text" placeholder="John Carter"
+										name="first_name">
+								</div>
+							</div>
+
+							<div class="">
+
+								<label class="uk-form-label" for="form-stacked-text">Почта</label>
+								<div class="uk-inline uk-form-controls" style="display: grid;">
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: mail"></span>
+									<input class="uk-input uk-border-pill" type="text" placeholder="Email address"
+										name="email">
+								</div>
+							</div>
+
+						</div>
+
+						<br>
+
+						<div class="uk-width-4-5 uk-flex uk-flex-between" style="margin: 0 auto">
+							<div class="">
+
+								<label class="uk-form-label" for="form-stacked-text">Номер телефона</label>
+								<div class="uk-inline uk-form-controls" style="display: grid;">
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: receiver"></span>
+									<input class="uk-input uk-border-pill" type="text" placeholder="(123) 456 - 7890"
+										name="phone">
+								</div>
+							</div>
+
+							<div class="">
+
+								<label class="uk-form-label" for="form-stacked-text">Город</label>
+								<div class="uk-inline uk-form-controls" style="display: grid;">
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: world"></span>
+									<input class="uk-input uk-border-pill" type="text" placeholder="Москва"
+										name="country">
+								</div>
+							</div>
+						</div>
+
+						<br>
+
+
+						<div class="uk-width-4-5 uk-flex uk-flex-between" style="margin: 0 auto">
+							<div class="">
+
+								<label class="uk-form-label" for="form-stacked-text">Пароль</label>
+								<div class="uk-inline uk-form-controls" style="display: grid;">
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+									<input class="uk-input uk-border-pill" type="password" placeholder="*********"
+										name="password1">
+								</div>
+							</div>
+
+							<div class="">
+
+								<label class="uk-form-label" for="form-stacked-text">Повторите пароль</label>
+								<div class="uk-inline uk-form-controls" style="display: grid;">
+									<span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+									<input class="uk-input uk-border-pill" type="password" placeholder="*********"
+										name="password2">
+								</div>
+							</div>
+						</div>
+
+
+
+				</div>
+
+
+
+
+
+				<div class="tab">
+
+					<p class="uk-text-left larg" style="font-size: 24px;">Предмет</h2>
+						<p class="uk-text-left small">Выберите проедмет в котором вы хорошо разбираетесь</p>
+						<br>
+
+						<div class="uk-width-4-5 uk-flex uk-flex-between section-m" style="margin: 0 auto">
+
+
+							<div class="tile">
+								<input type="checkbox" name="sports" id="sport1" class="inp" value="Economy">
+								<label for="sport1" class="lab">
+									<img src="https://cdn-icons-png.flaticon.com/512/3281/3281412.png" alt=""
+										width="80px" height="80px">
+									<p class="text-in">Экономина</p>
+								</label>
+							</div>
+
+							<div class="tile">
+								<input type="checkbox" name="sports" id="sport2" class="inp" value="Social_science">
+								<label for="sport2" class="lab">
+									<img src="https://cdn-icons-png.flaticon.com/512/2885/2885417.png" alt=""
+										width="80px" height="80px">
+									<p class="text-in">Обществознание</p>
+								</label>
+							</div>
+
+							<div class="tile">
+								<input type="checkbox" name="sports" id="sport3" class="inp" value="History">
+								<label for="sport3" class="lab">
+									<img src="https://cdn-icons-png.flaticon.com/512/3068/3068845.png" alt=""
+										width="80px" height="80px">
+									<p class="text-in">История</p>
+								</label>
+							</div>
+
+							<div class="tile">
+								<input type="checkbox" name="sports" id="sport4" class="inp" value="Mathematics">
+								<label for="sport4" class="lab">
+									<img src="https://cdn-icons-png.flaticon.com/512/2847/2847532.png" alt=""
+										width="80px" height="80px">
+									<p class="text-in">Mathematics</p>
+								</label>
+							</div>
+
+							<div class="tile">
+								<input type="checkbox" name="sports" id="sport5" class="inp" value="Physics">
+								<label for="sport4" class="lab">
+									<img src="https://cdn-icons-png.flaticon.com/512/5945/5945384.png" alt=""
+										width="80px" height="80px">
+									<p class="text-in">Физика</p>
+								</label>
+							</div>
+
+							<div class="tile">
+								<input type="checkbox" name="sports" id="sport6" class="inp" value="IT">
+								<label for="sport4" class="lab">
+									<img src="https://cdn-icons-png.flaticon.com/512/2387/2387707.png" alt=""
+										width="80px" height="80px">
+									<p class="text-in">Информатика</p>
+								</label>
+							</div>
+
+
+
+						</div>
+
+				</div>
+
+				<br>
+
+				<div class="tab">
+					<p class="uk-text-left larg" style="font-size: 24px;">Какой ваш уровень знаний</h2>
+						<p class="uk-text-left small">В последствии его можно будет поменять</p>
+						<br>
+						<div class="uk-width-4-5 uk-flex uk-flex-center  section-m" style="margin: 0 auto">
+							<div class="tile">
+								<input type="radio" name="knowledge" id="knowledge1" class="inp" value="Pro">
+								<label for="knowledge1" class="lab">
+									<img src="https://cdn-icons-png.flaticon.com/512/1319/1319861.png" alt=""
+										width="80px" height="80px">
+									<p class="text-in">Мастре++</p>
+								</label>
+							</div>
+							<div class="tile">
+								<input type="radio" name="knowledge" id="knowledge2" class="inp" value="Amateur">
+								<label for="knowledge2" class="lab">
+									<img src="https://cdn-icons-png.flaticon.com/512/981/981837.png" alt="" width="80px"
+										height="80px">
+									<p class="text-in">Мастер</p>
+								</label>
+							</div>
+							<div class="tile">
+								<input type="radio" name="knowledge" id="knowledge3" class="inp" value="Normal">
+								<label for="knowledge3" class="lab">
+									<img src="https://cdn-icons-png.flaticon.com/512/1721/1721611.png" alt=""
+										width="80px" height="80px">
+									<p class="text-in">Новичек++</p>
+								</label>
+							</div>
+							<div class="tile">
+								<input type="radio" name="knowledge" id="knowledge4" class="inp" value="Beginner">
+								<label for="knowledge4" class="lab">
+									<img src="https://cdn-icons-png.flaticon.com/512/5588/5588107.png" alt=""
+										width="80px" height="80px">
+									<p class="text-in">Новичек</p>
+								</label>
+							</div>
+						</div>
+				</div>
+
+				<div class="tab uk-text-center">
+
+					<img src="https://cdn-icons-png.flaticon.com/512/8058/8058613.png" alt="" width="120px"
+						height="120px">
+
+
+					<p class="uk-text-center larg" style="font-size: 24px;">Все готово</h2>
+						<p class="uk-text-center small">Проверьте всю информацию и тыкайте на кнопку подтвердить!</p>
+						<br>
+
+						<button class="uk-button uk-button-primary uk-button-large btn-sub" type="submit"
+							name="profile_saver3">Подтвердить</button>
+
+				</div>
+				{% csrf_token %}
+				<div style="overflow:auto;" id="next-previous">
+					<div style="float:left; margin: 1%">
+						<button class="uk-button uk-button-default uk-border-pill" id="prevBtn"
+							style="border-color: blue; color: blue; display: none" type="button" onclick="nextPrev(-1)">
+							Назад
+						</button>
+						<a class="uk-button uk-button-default uk-border-pill" id="loginBtn"
+							style="border-color: blue; color: blue" type="button" href="/login/">
+							Есть аккаунт? Войди в него
+					</a>
+
+					</div>
+
+
+					<div style="float:right; margin: 1%">
+						<button class="uk-button uk-button-primary uk-border-pill" type="button" id="nextBtn"
+							onclick="nextPrev(1)" name="profile_saver1">
+							Далее
+						</button>
+
+					</div>
+			</form>
+
+
+		</div>
+
+
+
+	</body>
+	<!-- <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script> -->
+
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.13.7/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.13.7/dist/js/uikit-icons.min.js"></script>
+	<script>
+		let currentTab = 0;
+		let progressBar = document.querySelector(".all-steps");
+
+
+		function showTab(n) {
+			let x = document.getElementsByClassName("tab");
+			x[n].style.display = "block";
+			console.log(n)
+			if (n === 0) {
+				document.getElementById("prevBtn").style.display = "none";
+				document.getElementById("loginBtn").style.display = "inline-block";
+
+			} else {
+				document.getElementById("prevBtn").style.display = "inline";
+				document.getElementById("loginBtn").style.display = "none";
+			}
+			if (n === (x.length - 1)) {
+				document.getElementById("nextBtn").innerHTML = "Далее";
+				document.getElementById("nextBtn").style.display = "none";
+
+			} else {
+				document.getElementById("nextBtn").innerHTML = "Далее";
+				document.getElementById("nextBtn").style.display = "inline";
+
+			}
+			fixStepIndicator(n)
+		}
+
+		function nextPrev(n) {
+			let x = document.getElementsByClassName("tab");
+			x[currentTab].style.display = "none";
+			currentTab = currentTab + n;
+			if (currentTab === x.length) {
+				document.getElementById('nextBtn').type = "submit"
+			}
+			showTab(currentTab);
+		}
+
+		function surTab(n) {
+			let x = document.getElementsByClassName("tab");
+			x[currentTab].style.display = "none";
+			currentTab = n;
+			showTab(currentTab);
+		}
+
+		function fixStepIndicator(n) {
+			let i, x = document.getElementsByClassName("step");
+
+			if (n != x.length - 1) {
+				progressBar.style.setProperty("--width-nonstatic", `${(n+1) * 30}%`);
+			} else {
+				progressBar.style.setProperty("--width-nonstatic", "100%");
+			}
+
+			x[n].style.backgroundColor = '#2652bf';
+			x[n].style.borderColor = '#2652bf';
+			x[n].style.borderColor = '#ffffff';
+			//color for n
+
+			for (i = 0; i < n; i++) { // color for every before n
+				x[i].style.backgroundColor = '#0a3644';
+				x[i].style.borderColor = '#0a3644';
+				x[i].style.color = '#ffffff';
+			}
+
+			for (i = n + 1; i < x.length; i++) { // color for every after n
+				x[i].style.backgroundColor = '#bbbbbb';
+				x[i].style.borderColor = '#bbbbbb';
+			}
+		}
+	</script>
+
+
+</body>
+
+<script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'>
+</script>
+
+
+</html>

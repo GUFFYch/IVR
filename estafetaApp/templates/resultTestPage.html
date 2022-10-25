@@ -1,0 +1,54 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estafeta</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+    {% include 'menu.html' %}
+    
+    <div class="uk-section uk-width-4-5" style="margin: 0 auto">
+        <div class="uk-flex uk-flex-bottom uk-flex-around" style="border-bottom: 1px solid gray;">
+            <h1>{{test.name}}</h1>
+            <h2>{{test.level}}</h2>
+            <h2>{{test.subject}}</h2>
+        </div>
+        <!-- тут нужен вывод таблички -->
+        <table class="uk-table uk-table-small uk-table-divider">
+          <thead>
+            <tr>
+              {% for row in excel_data_start %}
+              <th class="uk-text-truncate" uk-tooltip="{{ row }}">{{ row }}</th>
+              {% endfor %}
+    
+            </tr>
+          </thead>
+          <tbody>
+    
+            {% for row in excel_data %}
+            <tr>
+    
+              {% for cell in row %}
+              <td>{{ cell }}</td>
+    
+              {% endfor %}
+    
+            </tr>
+    
+            {% endfor %}
+    
+          </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit-icons.min.js"></script>

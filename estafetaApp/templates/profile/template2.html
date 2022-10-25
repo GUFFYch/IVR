@@ -1,0 +1,181 @@
+<div style="margin-top: 5%">
+
+
+
+    {% if team != ""%}
+
+    <div class="uk-section uk-preserve-color uk-section-muted">
+        <div class="uk-container">
+
+            <div class="uk-panel uk-margin-medium">
+                <h3>Информация</h3>
+            </div>
+
+            <div class="uk-grid-match uk-child-width-expand@m" uk-grid>
+                <div>
+                    <header class="uk-comment-header">
+                        <div class="uk-grid-medium uk-flex-middle" uk-grid>
+                            <div class="uk-width-auto">
+                                <img class="uk-comment-avatar"
+                                    src="https://cdn-icons-png.flaticon.com/512/1786/1786608.png" width="200"
+                                    height="200" alt="">
+                            </div>
+                            <div class="uk-width-expand">
+                                <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" href="#">Все готово!</a></h4>
+                                <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                                    <li><a href="#">Вы в команде</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+                <div></div>
+                <div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                        <h3 class="uk-card-title">{{team.name}}</h3>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button class="uk-button uk-button-danger" type="submit" name="leaveTeam">Выфти</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    {% else %}
+
+
+    <div class="uk-flex uk-flex-top">
+
+        <div class="uk-section uk-preserve-color uk-section-muted uk-width-3-5">
+            <div class="uk-container">
+
+                <div class="uk-panel uk-margin-medium">
+                    <h3>Информация</h3>
+                </div>
+
+                <div class="uk-grid-match uk-child-width-expand@m" uk-grid>
+                    <div>
+                            <div class="uk-grid-medium uk-flex-middle" uk-grid>
+                                <div class="uk-width-auto">
+                                    <img class="uk-comment-avatar"
+                                        src="https://cdn-icons-png.flaticon.com/512/2353/2353678.png" width="200"
+                                        height="200" alt="">
+                                </div>
+                                <div class="uk-width-expand">
+                                    <h4 style="margin: 0" class="uk-comment-title uk-text-break">У вас нет команды!</h4>
+                                    <p style="margin: 0" calss="uk-text-break">Вы можите найти или создть команду</p>
+                                        <a class="uk-button uk-button uk-button-default" href="#modal-sections"
+                                                uk-toggle style="border-color: brown;">Создать команду</a>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="uk-width-2-5 uk-text-center">
+            <h1>Поиск команд</h1>
+            <br>
+            <form class="uk-search uk-search-navbar uk-width-4-5" style="margin: 2% auto">
+                <span class="uk-search-icon-flip" uk-search-icon></span>
+                <input class="uk-search-input" id="searchPole" type="search" placeholder="Поиск">
+            </form>
+            <div class="uk-grid uk-width-3-5" style="margin: 0 auto" id="teamsList" uk-grid>
+
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+
+
+    <div uk-margin>
+
+        <div id="modal-sections" uk-modal>
+            <div class="uk-modal-dialog">
+                <form method="POST" class="uk-form-horizontal uk-margin-large">
+
+                    <button class="uk-modal-close-default" type="button" uk-close></button>
+                    <div class="uk-modal-header">
+                        <h2 class="uk-modal-title">Создать команду</h2>
+                    </div>
+                    <div class="uk-modal-body">
+
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label">Название команды</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" maxlength="50" name="name" type="text"
+                                    placeholder="Team name..." required>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label">Пароль</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="pswd1" name="password" type="password"
+                                    placeholder="****" required>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label">повторный пароль</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="pswd2" name="password2" type="password"
+                                    placeholder="****" required>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    {% csrf_token %}
+                    <div class="uk-modal-footer uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
+                        <button class="uk-button uk-button-primary" name="createTeam" id="savebtn" type="submit">Сохранить</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#pswd1").on('input', function () {
+        pswdChecker(this.value == $("#pswd2").val())
+    });
+    $("#pswd2").on('input', function () {
+        pswdChecker(this.value == $("#pswd1").val())
+    });
+
+    function pswdChecker(val){
+        console.log(val)
+        if (val){
+            $("#pswd1").css("border", "1px solid green")
+            $("#pswd2").css("border", "1px solid green")
+            $("#savebtn").prop('disabled', false);
+        } else{
+            $("#pswd1").css("border", "1px solid red")
+            $("#pswd2").css("border", "1px solid red")
+            $("#savebtn").prop('disabled', true);
+        }
+    }
+
+
+    $("#searchPole").on('input', function () {
+        var xhr = new XMLHttpRequest()
+        if (this.value) {
+            xhr.open('GET', `/searchteam/${this.value}/`)
+            xhr.onload = function () {
+                $('#teamsList').html(xhr.response)
+            }
+            xhr.send()
+        }
+    });
+</script>

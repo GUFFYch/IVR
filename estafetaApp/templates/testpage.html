@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estafeta</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
+    <script src="https://kit.fontawesome.com/24656403b4.js" crossorigin="anonymous"></script>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+    {% load static %}
+    {% include 'menu.html' %}
+    <form method="post" class="uk-width-4-5 uk-flex-column" style="margin: 5% auto">
+        {% for question in questions %}
+        <section class="uk-width-1 uk-section-small uk-flex uk-flex-center uk-flex-middle">
+            <div class="uk-width-2-3 uk-card uk-card-default">
+
+                <div class="uk-card-header" style="border: none">
+                    <div class="uk-grid-small uk-flex-middle" uk-grid>
+                        <div class="uk-width-expand">
+                            <h3 class="uk-card-title uk-margin-remove-bottom">{{question.test_text}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card-body">
+                    <label>Введите ответ</label>
+                    <input type="text" class="uk-input" name="test_{{question.test_number}}_answer" required>
+                </div>
+            </div>
+            <!-- {{question.test_text}} <br>
+            {{question.test_answer}} <br>
+            {{question.test_score}} <br>
+            {{question.test_time}} <br> -->
+            <!-- <br> -->
+        </section>
+        {% endfor %}
+        {% csrf_token %}
+
+        <div class="uk-width-1 uk-flex uk-flex-right">
+            <button class="uk-button uk-button-primary" name="saveAns">
+                Закончить
+            </button>
+        </div>
+    </form>
+</body>
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit-icons.min.js"></script>
+
+</html>

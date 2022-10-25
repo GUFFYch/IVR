@@ -1,0 +1,8 @@
+<!-- <p>{{teams}}</p> -->
+<form class="uk-grid" uk-grid>
+    {% for test in tests %}
+    {% if test.is_active %}
+        <label><input class="uk-radio" type="radio" value="{{test.id}}" name="testId" checked> {{test.name}}</label>
+    {% endif %}
+    {% endfor %}
+</form>
