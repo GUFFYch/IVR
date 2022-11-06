@@ -15,6 +15,11 @@ class Tests(models.Model):
     question_amount = models.IntegerField() # кол-во вопросов
     test_time = models.CharField(max_length=10000)# время на вопрсо
     max_score = models.IntegerField() # всего баллов
+    # статистика по ответам
+    users_passed = models.CharField(max_length=1000000)
+    teams_passed = models.CharField(max_length=1000000)
+    teams_mark = models.CharField(max_length=1000000)
+    users_answers = models.CharField(max_length=1000000)
 
 class Questions(models.Model):
     test_name = models.CharField(max_length=10000) # текст вопроса

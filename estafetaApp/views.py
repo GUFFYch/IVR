@@ -13,6 +13,7 @@ from django.db.models import Q
 import xlrd 
 import csv
 import pandas as pd
+import math
 
 # table generator
 def table_page(request):
@@ -149,37 +150,90 @@ def createtest_page(request):
             return HttpResponseRedirect('/createtest/')
         return render(request, 'createtest.html')
     return render(request, 'notadmin.html')
-
+# test page function
 def test_apge(request, name):
+    test = Tests.objects.get(name=name)
+    quest = Questions.objects.get(test_name=name)
+    gamemode = int(test.game_mode)
+    if test.game_mode in ['3', '4'] and request.user.team == '':
+        return HttpResponseRedirect('/')
+    if str(request.user.id) in test.users_passed.split(' | '):
+        return HttpResponseRedirect(f'/results/{name}')
     content = {}
     if request.user.is_authenticated:
-        test = Tests.objects.filter(name=name)
-        quest = Questions.objects.filter(test_name=name)
         questions = []
-        # print(questions[0].question_amount)
-        # for i in range(0, quest[0].question_amount):
-            # 'test_answer':quest[0].test_answer,
-            # 'test_score':quest[0].test_score,
-            # 'test_time':quest[0].test_time,
-        
         content['questions'] = [{
-                                    'test_text':list(filter(None,quest[0].test_text.split(",")))[i],
-                                    'test_answer':list(filter(None,quest[0].test_answer.split(",")))[i],
-                                    'test_score':int(list(filter(None,quest[0].test_score.split(",")))[i]),
-                                    'test_time':int(list(filter(None,quest[0].test_time.split(",")))[i]),
-                                    'test_number': i
-                                } for i in range(quest[0].question_amount) ]    
+                                'test_text':list(filter(None,quest.test_text.split(",")))[i],
+                                'test_score':int(list(filter(None,quest.test_score.split(",")))[i]),
+                                'test_time':int(list(filter(None,quest.test_time.split(",")))[i]),
+                                'test_number': i+1
+                                } for i in range(quest.question_amount) ]    
 
         if request.method == 'POST' and 'saveAns':
-            print(request.POST)
-            return HttpResponseRedirect(f'/quiz/{name}')
+            answers = test.users_answers
+            teams_passed = list(filter(None,set(test.teams_passed.split(" | ") + [request.user.team])))
+            index = teams_passed.index(request.user.team)
+            teams_mark = test.teams_mark.split(" | ")
+            score = 0
+            for i in range(quest.question_amount):
+                user_ans = request.POST[f'test_{i + 1}_answer'].strip()
+                correction = 1 if user_ans == list(filter(None,quest.test_answer.split(",")))[i].strip() else 0
+                answers += f'{user_ans}//{correction} | '
+                score += int(list(filter(None,quest.test_score.split(",")))[i]) if correction else 0
+            if teams_mark[index] == '':
+                teams_mark[index] = f'{score}'
+            else:
+                print(teams_mark[index], teams_mark, sep=" |||| ")
+                teams_mark[index] = str(int(teams_mark[index]) +  score )
+            test.teams_passed = ' | '.join(teams_passed)
+            test.teams_mark = ' | '.join(teams_mark)
+            test.users_passed += f'{request.user.id} | '
+            test.users_answers = answers
+            test.save()
+            return HttpResponseRedirect(f'/results/{name}')
 
               
-        return render(request, 'testpage.html', content)
+        return render(request, f'testpage_{gamemode%2}.html', content)
     else:
         return HttpResponseRedirect('/')
+# function for showing resoults
+def resultstest_page(request, name):
+    content = {}
+    test = Tests.objects.get(name=name)
+    user_index = test.users_passed.split(' | ').index(f'{request.user.id}')
+    quest = Questions.objects.get(test_name=name)
+    answers_arr = test.users_answers.split('|')
+    # arr with all Q&A of user
+    content['questions'] = [{
+                            'test_text':list(filter(None,quest.test_text.split(",")))[i],
+                            'test_score':int(list(filter(None,quest.test_score.split(",")))[i]),
+                            'test_time':int(list(filter(None,quest.test_time.split(",")))[i]),
+                            'test_number': i,
+                            'user_answer': answers_arr[i + quest.question_amount*user_index].strip().split('//')[0],
+                            'user_correction': answers_arr[i + quest.question_amount*user_index].strip().split('//')[-1],
+                            'question_mark': int(list(filter(None,quest.test_score.split(",")))[i]) if answers_arr[i + quest.question_amount*user_index].strip().split('//')[0] == answers_arr[i + quest.question_amount*user_index].strip().split('//')[-1] else 0,
+                            } for i  in range(quest.question_amount) ]
+    
+    # arr with marks of user
+    content['mark'] = {
+        'test_score':sum([int(list(filter(None,quest.test_score.split(",")))[i]) if answers_arr[i + quest.question_amount*user_index].strip().split('//')[0] == answers_arr[i + quest.question_amount*user_index].strip().split('//')[-1] else 0 for i in range(quest.question_amount)]), 
+        'test_questions_amount': sum([int(list(filter(None,quest.test_score.split(",")))[i]) for i in range(quest.question_amount)]),
+                }
+    # checking if it was a team test to show team stats
+    if test.game_mode in ['3', '4']:
+        team_users = [i for i in list(filter(None,test.users_passed.split(' | '))) if Account.objects.get(id=i).team == request.user.team]
+        indexes = [ test.users_passed.split(' | ').index(i) for i in team_users]
+        # arr with team stats
+        content['team'] = [{
+            'first_name' : Account.objects.get(id=test.users_passed.split(' | ')[i]).first_name,
+            'score' : sum([int(list(filter(None,quest.test_score.split(",")))[j]) if answers_arr[j + quest.question_amount*i].strip().split('//')[0] == answers_arr[j + quest.question_amount*i].strip().split('//')[-1] else 0 for j in range(quest.question_amount)]),
+            'percentage': math.ceil(sum([int(list(filter(None,quest.test_score.split(",")))[j]) if answers_arr[j + quest.question_amount*i].strip().split('//')[0] == answers_arr[j + quest.question_amount*i].strip().split('//')[-1] else 0 for j in range(quest.question_amount)]) * 100 / sum([int(list(filter(None,quest.test_score.split(",")))[i]) for i in range(quest.question_amount)])),
 
+        } for i in indexes]
+    content['test'] = test
+    return render(request, 'resultpage.html', content)  
 
+# function for deleting tests
 def finishtest_page(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -188,138 +242,59 @@ def finishtest_page(request):
             test = Tests.objects.get(id = request.POST['testId'])
             test.is_active = False
 
-            print(request.FILES)
-
-            if request.FILES:
-                print("---------------OK---------------")
-                excel_file = request.FILES["excel_file"]
-
-                wb = openpyxl.load_workbook(excel_file)
-
-                worksheet = wb["Sheet1"]
-                # print(worksheet)
-
-                excel_data = list()
-
-                for row in worksheet.iter_rows():
-                    row_data = list()
-                    for cell in row:
-                        row_data.append(str(cell.value))
-                    excel_data.append(row_data)
-
-
-                url = str(test.id) + '.csv'
-                test.results_link = url
-                print(url)
-
             test.save()
 
             return HttpResponseRedirect('/finishtest/')
         return render(request, 'finishtest.html')
     return render(request, 'notadmin.html')
 
+# main page function
 def main_page(request):
     content = {}
     tests = Tests.objects.all()
-    content['tests'] = tests
+    content['tests'] = [{
+                'name':test.name,
+                'subject':test.subject,
+                'level':test.level,
+                'description':test.description,
+                'is_active':test.is_active,
+                'game_mode':test.game_mode,
+                'question_amount':test.question_amount,
+                'test_time':test.test_time,
+                'max_score':test.max_score,
+                'passed': 1 if str(request.user.id) in test.users_passed.split(' | ') else 0
+            } for test in tests]
+    
+    
     return render(request, 'main.html', content)
 
+# function for resoult page
 def resultsall_page(request):
     if (request.user.is_authenticated):
         content = {}
         tests = Tests.objects.all()
-        content['tests'] = tests
+        content['tests'] = [{
+                'name':test.name,
+                'subject':test.subject,
+                'level':test.level,
+                'description':test.description,
+                'is_active':test.is_active,
+                'game_mode':test.game_mode,
+                'question_amount':test.question_amount,
+                'test_time':test.test_time,
+                'max_score':test.max_score,
+                'passed': 1 if str(request.user.id) in test.users_passed.split(' | ') else 0
+            } for test in tests]        
         return render(request, 'results.html', content)
     else:
         return HttpResponseRedirect('/')
 
-def resultstest_page(request, id):
-    content = {}
-    test = Tests.objects.get(id=id)
-    content['test'] = test
- 
-    
-
-    with open('2.csv', newline='') as f:
-        reader = csv.reader(f)
-        data = list(reader)
-    print(data)
-
-
-    content["excel_data_start"] = data[0]
-
-    content["excel_data"] = data[1::]
-
-    return render(request, 'resultTestPage.html', content)
-
-
-def info_page(request):
-    content = {}
-    
-    try:
-        test = Tests.objects.get()
-        user = Account.objects.get(email=request.user)
-        content['user'] = user
-
-        if request.FILES:
-
-            # SAVE FILE TO CSV
-
-
-            excel_file = request.FILES["excel_file"]
-
-            wb = openpyxl.load_workbook(excel_file)
-
-            worksheet = wb["Sheet1"]
-            # print(worksheet)
-
-            excel_data = list()
-
-            for row in worksheet.iter_rows():
-                row_data = list()
-                for cell in row:
-                    row_data.append(str(cell.value))
-                excel_data.append(row_data)
-
-            url = str(test.id) + '.csv'
-            print(url)
-
-            with open(url, 'w', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerows(excel_data)
-
-            test['results_link'] = url
-
-            print(test.id)
-
-
-            # OPEN CSV FILE 
-
-
-            with open(test['results_link'], newline='') as f:
-                reader = csv.reader(f)
-                data = list(reader)
-            print(data)
-
-
-            content["excel_data_start"] = data[0]
-
-            content["excel_data"] = data[1::]
-
-        return render(request, 'info.html', content)
-    except:
-        return render(request, 'info.html', content)
-
-# def main_page(request):
-#     content = {}
-#     tests = Tests.objects.all()
-#     content['tests'] = tests
-#     return render(request, 'main.html', content)
-
+# logout default function
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")
 
+# registration function
 def reg_page(request):
     form = SignUpForm(request.POST)
     context = {
@@ -361,6 +336,7 @@ def reg_page(request):
 
     return render(request, 'signin.html', context)
 
+# login function
 def login_page(request):
 
     if request.method == 'POST' and 'btnform2' in request.POST:

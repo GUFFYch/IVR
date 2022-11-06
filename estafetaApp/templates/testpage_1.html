@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estafeta</title>
+    <title>OnlyQuest</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
     <script src="https://kit.fontawesome.com/24656403b4.js" crossorigin="anonymous"></script>
     <!-- JQuery -->
@@ -32,11 +32,6 @@
                     <input type="text" class="uk-input" name="test_{{question.test_number}}_answer" required>
                 </div>
             </div>
-            <!-- {{question.test_text}} <br>
-            {{question.test_answer}} <br>
-            {{question.test_score}} <br>
-            {{question.test_time}} <br> -->
-            <!-- <br> -->
         </section>
         {% endfor %}
         {% csrf_token %}

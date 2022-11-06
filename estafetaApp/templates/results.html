@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estafeta</title>
+    <title>OnlyQuest</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
     <script src="https://kit.fontawesome.com/24656403b4.js" crossorigin="anonymous"></script>
     <!-- JQuery -->
@@ -17,7 +17,6 @@
 
     {% include 'menu.html' %}
     <div class="uk-width-4-5 uk-margin-medium-top" style="margin: 0 auto" uk-filter="target: .js-filter">
-
         <div class="uk-grid-small uk-grid-divider uk-child-width-auto uk-felx uk-flex-center uk-flex-middle" uk-grid>
             <div>
                 <ul class="uk-subnav uk-subnav-pill" uk-margin>
@@ -26,93 +25,67 @@
             </div>
             <div>
                 <ul class="uk-subnav uk-subnav-pill" uk-margin>
-                    <li uk-filter-control="filter: [data-subject='Business']; group: data-subject"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Business</a></li>
-                    <li uk-filter-control="filter: [data-subject='Sociology']; group: data-subject"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Sociology</a></li>
-                    <li uk-filter-control="filter: [data-subject='Economics']; group: data-subject"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Economics</a></li>
-                    <li uk-filter-control="filter: [data-subject='Math']; group: data-subject"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Math</a></li>
+                    <li uk-filter-control="filter: [data-subject='Economy']; group: data-subject"><a
+                            class="uk-button uk-button-link uk-text-right" href="#">Экономика</a></li>
+                    <li uk-filter-control="filter: [data-subject='Social_science']; group: data-subject"><a
+                            class="uk-button uk-button-link uk-text-right" href="#">Обществознание</a></li>
+                    <li uk-filter-control="filter: [data-subject='History']; group: data-subject"><a
+                            class="uk-button uk-button-link uk-text-right" href="#">История</a></li>
+                    <li uk-filter-control="filter: [data-subject='Mathematics']; group: data-subject"><a
+                            class="uk-button uk-button-link uk-text-right" href="#">Математика</a></li>
+                    <li uk-filter-control="filter: [data-subject='Physics']; group: data-subject"><a
+                            class="uk-button uk-button-link uk-text-right" href="#">Физика</a></li>
+                    <li uk-filter-control="filter: [data-subject='IT']; group: data-subject"><a
+                            class="uk-button uk-button-link uk-text-right" href="#">Информатика</a></li>
                 </ul>
             </div>
             <div>
                 <ul class="uk-subnav uk-subnav-pill" uk-margin>
                     <li uk-filter-control="filter: [data-level='Pro']; group: data-level"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Pro</a></li>
+                            class="uk-button uk-button-link uk-text-right" href="#">Мастре++</a></li>
                     <li uk-filter-control="filter: [data-level='Amateur']; group: data-level"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Amateur</a>
+                            class="uk-button uk-button-link uk-text-right" href="#">Мастер</a>
                     </li>
                     <li uk-filter-control="filter: [data-level='Normal']; group: data-level"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Normal</a></li>
+                            class="uk-button uk-button-link uk-text-right" href="#">Новичек++</a></li>
                     <li uk-filter-control="filter: [data-level='Beginner']; group: data-level"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Beginner</a>
+                            class="uk-button uk-button-link uk-text-right" href="#">Новичек</a>
                     </li>
 
                 </ul>
             </div>
-            <div>
+            <!-- <div>
                 <ul class="uk-subnav uk-subnav-pill" uk-margin>
                     <li uk-filter-control="filter: [data-avalibility='avalible']; group: data-avalibility"><a
                             class="uk-button uk-button-link uk-text-right" href="#">Avalible</a>
                     </li>
                 </ul>
-            </div>
+            </div> -->
         </div>
 
         <ul class="js-filter uk-child-width-1-2 uk-child-width-1-4 uk-text-center" uk-grid>
             {% for test in tests %}
-            {% if test.is_active == 0 %}
-            <li data-subject="{{test.subject}}">
+            {% if test.passed %}
+            <li data-level="{{test.level}}" data-subject="{{test.subject}}" data-avalibility="avalible">
 
-                <div class="uk-card uk-card-default uk-card-hover" style="border-radius: 20px;">
-                    <div class="uk-card-header">
-                        <div class="uk-grid-small uk-flex-middle" uk-grid>
-                            <div class="uk-width-auto">
-                                {% if test.subject == "Mathematics" %}
-                                <img class="uk-border-circle" width="40" height="40"
-                                    src="{% static "images/estafeta_logo_Maths.jpg" %}">
-                                {% elif test.subject == "Economics" or test.subject == "Business"  %}
-                                <img class="uk-border-circle" width="40" height="40"
-                                    src="{% static "images/estafeta_logo_Economics.jpg" %}">
-                                {% elif test.subject == "Science"%}
-                                <img class="uk-border-circle" width="40" height="40"
-                                    src="{% static "images/estafeta_logo_Chemistry.jpg" %}">
-                                {% endif %}
-                            </div>
-                            <div class="uk-width-expand">
-                                <h3 class="uk-card-title uk-margin-remove-bottom">{{test.subject}}</h3>
+                <a href="/quiz/{{test.name}}" class="uk-link-reset">
+                    <div class="uk-card uk-card-default uk-card-hover uk-height-medium" style="border-radius: 20px;">
+                        <div class="uk-card-header" style="border: none">
+                            <div class="uk-grid-small uk-flex-middle" uk-grid>
+                                <div class="uk-width-auto">
+                                    <img class="uk-border-circle" width="40" height="40" src="">
+                                </div>
+                                <div class="uk-width-expand">
+                                    <h3 class="uk-card-title uk-margin-remove-bottom">{{test.subject}}</h3>
+                                </div>
                             </div>
                         </div>
+                        <div class="uk-card-body">
+                            <p class="uk-text-truncate">{{test.name}}</p>
+                            <p class="uk-text-truncate">{{test.description}}</p>
+                        </div>
                     </div>
-                    <div class="uk-card-body uk-text-left">
-                        <p class="uk-text-bold">{{test.name}}</p>
-
-                        <ul uk-nav>
-                            <li class="uk-active uk-flex uk-flex-middle uk-margin-remove"><i
-                                    class="fa-solid fa-check uk-margin-small-right uk-border-circle"
-                                    style="font-size: 20px; color: white; background-color: blue; padding: 1%;"></i>
-                                <p>type the text</p>
-                            </li>
-                            <li class="uk-active uk-flex uk-flex-middle uk-margin-remove"><i
-                                    class="fa-solid fa-check uk-margin-small-right uk-border-circle"
-                                    style="font-size: 20px; color: white; background-color: blue; padding: 1%;"></i>
-                                <p>type the text</p>
-                            </li>
-                            <li class="uk-active uk-flex uk-flex-middle uk-margin-remove"><i
-                                    class="fa-solid fa-check uk-margin-small-right uk-border-circle"
-                                    style="font-size: 20px; color: white; background-color: blue; padding: 1%;"></i>
-                                <p>type the text</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="uk-card-footer uk-text-center" style="border: none">
-                        <a href="/results/{{test.id}}"
-                            class="uk-width-4-5 uk-button uk-button-primary uk-padding-small uk-border-pill"
-                            style="margin: 0 auto">See results</a>
-
-                    </div>
-                </div>
+                </a>
             </li>
             {% endif %}
             {% endfor %}

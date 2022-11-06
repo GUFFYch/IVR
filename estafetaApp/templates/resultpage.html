@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyQuest</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
+    <script src="https://kit.fontawesome.com/24656403b4.js" crossorigin="anonymous"></script>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+    {% load static %}
+
+    {% include 'menu.html' %}
+
+    <div class="uk-section">
+        <div class="uk-width-4-5 uk-flex uk-flex-middle uk-flex-around" style="margin: 0 auto;">
+            <h1>{{test.name}}</h1>
+        
+            <h2>Всего: {{mark.test_score}} из {{mark.test_questions_amount}}</h2>
+        </div>
+        <div>
+            {% for question in questions %}
+            <section class="uk-width-1 uk-section-small uk-flex uk-flex-center uk-flex-middle">
+                <div class="uk-width-2-3 uk-card uk-card-default {% if question.user_answer !=  question.user_correction%} uk-card-secondary" style="background-color: rgba(255, 0, 0, 0.8); color: white" {% endif %} ">
+
+                    <div class="uk-card-header" style="border: none">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <h3 class="uk-card-title uk-margin-remove-bottom">{{question.test_text}}</h3>
+                            </div>
+                            <div>
+                                <p> {{question.question_mark}} / {{question.test_score}} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body uk-flex uk-flex-middle">
+                        <div class="uk-width-1-2">
+                            <label>Ваш ответ:</label>
+                            <p class="uk-width-1 uk-text-left">{{question.user_answer}}</p>
+                        </div>
+                        <div class="uk-width-1-2">
+                            <label>правильные ответ ответ:</label>
+                            <p class="uk-width-1 uk-text-left">{{question.user_correction}}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+    <div class="uk-section uk-width-2-5" style="margin: 0 auto">
+        <h2>Результаты ваших товарищей по команде</h2>
+        {% for user in team %}
+        <div class="uk-grid-small" uk-grid>
+            <div class="uk-width-expand" uk-leader="fill: _">{{user.first_name}}</div>
+            <div>{{user.score}} баллов из {{mark.test_questions_amount}}</div>
+            <div>{{user.percentage}} %</div>
+
+
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+</body>
+
+</html>
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit-icons.min.js"></script>

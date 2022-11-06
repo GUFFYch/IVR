@@ -28,6 +28,7 @@ urlpatterns = [
     path('signin/', views.reg_page, name='signup'),
     path('profile/', views.profile_page),
     path('quiz/<name>', views.test_apge),
+    path('results/<name>', views.resultstest_page),
     path('searchteam/<name>/', views.searchTeam_page),
     path('searchtest/<name>/', views.searchTest_page),
     # path('profile/<id>', views.profile_sertain_page),
@@ -36,7 +37,4 @@ urlpatterns = [
     path('profile/<name>/', views.profileTemplate_page),
     path('table/', views.table_page),
     path('results/', views.resultsall_page),
-    path('results/<id>', views.resultstest_page),
-    path('results/info/', views.info_page),
-
 ]

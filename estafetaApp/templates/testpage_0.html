@@ -1,0 +1,133 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyQuest</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
+    <script src="https://kit.fontawesome.com/24656403b4.js" crossorigin="anonymous"></script>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<style>
+    input {
+        border-radius: 5px !important;
+    }
+
+    #regForm {
+        margin: 0px auto;
+        padding: 40px;
+        border-radius: 10px;
+    }
+
+    .tab {
+        display: none;
+    }
+
+    #prevBtn {
+        background-color: #bbbbbb;
+    }
+
+</style>
+
+<body onload="showTab(0)">
+    {% load static %}
+    {% include 'menu.html' %}
+    <div class="uk-flex uk-flex-center uk-width-1">
+        <form id="regForm" class="uk-width-4-5" style="margin: 0 auto;" method="POST">
+
+            {% for question in questions %}
+            <div class="tab">
+                <div class="uk-width-2-3 uk-card uk-card-default" style="margin: 0 auto;">
+                    <div class="uk-card-header" style="border: none">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <h3 class="uk-card-title uk-margin-remove-bottom">{{question.test_text}}</h3>
+                            </div>
+                            <div>
+                                <p>Вопрос номер {{question.test_number}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body">
+                        <label>Введите ответ</label>
+                        <input id="quest_{{question.test_number}}" type="text" class="uk-input" name="test_{{question.test_number}}_answer" oninput="passChecker({{question.test_number}})" required>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+            <br>
+            <br>
+            <div style="overflow:auto;" id="next-previous">
+                <div style="float:right;">
+                    {% csrf_token %}
+                    <button class="uk-button uk-button-default" type="button" id="nextBtn" onclick="nextPrev(1)"
+                        name="profile_saver1"> Далее
+                    </button>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.13.7/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.13.7/dist/js/uikit-icons.min.js"></script>
+<script>
+    let currentTab = 0;
+
+    function passChecker(n){
+        input = document.getElementById(`quest_${n}`);
+        if (input.value.length < 1){
+            document.getElementById("nextBtn").setAttribute("disabled", "disabled");
+            return false;
+        } else {
+            document.getElementById("nextBtn").removeAttribute("disabled");;
+            return true;
+        }
+    }
+
+    function showTab(n) {
+        let x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        console.log(n)
+        if (n === 0) {
+            passChecker(n+1);
+        } else {
+            passChecker(n+1);
+        }
+        if (n === (x.length - 1)) {
+            passChecker(n+1);
+            document.getElementById("nextBtn").innerHTML = "Далее";
+        } else {
+            passChecker(n+1);
+            document.getElementById("nextBtn").innerHTML = "Далее";
+        }
+    }
+
+    function nextPrev(n) {
+        let x = document.getElementsByClassName("tab");
+        x[currentTab].style.display = "none";
+        currentTab = currentTab + n;
+        if (currentTab === x.length - 1) {
+            document.getElementById('nextBtn').type = "submit"
+        }
+        showTab(currentTab);
+    }
+
+    function surTab(n) {
+        let x = document.getElementsByClassName("tab");
+        x[currentTab].style.display = "none";
+        currentTab = n;
+        showTab(currentTab);
+    }
+
+</script>
+
+</html>

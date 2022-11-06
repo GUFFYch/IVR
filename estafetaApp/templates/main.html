@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estafeta</title>
+    <title>OnlyQuest</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.10/dist/css/uikit.min.css" />
     <script src="https://kit.fontawesome.com/24656403b4.js" crossorigin="anonymous"></script>
     <!-- JQuery -->
@@ -42,29 +42,30 @@
             <div>
                 <ul class="uk-subnav uk-subnav-pill" uk-margin>
                     <li uk-filter-control="filter: [data-level='Pro']; group: data-level"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Pro</a></li>
+                            class="uk-button uk-button-link uk-text-right" href="#">Мастре++</a></li>
                     <li uk-filter-control="filter: [data-level='Amateur']; group: data-level"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Amateur</a>
+                            class="uk-button uk-button-link uk-text-right" href="#">Мастер</a>
                     </li>
                     <li uk-filter-control="filter: [data-level='Normal']; group: data-level"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Normal</a></li>
+                            class="uk-button uk-button-link uk-text-right" href="#">Новичек++</a></li>
                     <li uk-filter-control="filter: [data-level='Beginner']; group: data-level"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Beginner</a>
+                            class="uk-button uk-button-link uk-text-right" href="#">Новичек</a>
                     </li>
 
                 </ul>
             </div>
-            <div>
+            <!-- <div>
                 <ul class="uk-subnav uk-subnav-pill" uk-margin>
                     <li uk-filter-control="filter: [data-avalibility='avalible']; group: data-avalibility"><a
-                            class="uk-button uk-button-link uk-text-right" href="#">Avalible</a>
+                            class="uk-button uk-button-link uk-text-right" href="#">Доступны</a>
                     </li>
                 </ul>
-            </div>
+            </div> -->
         </div>
 
         <ul class="js-filter uk-child-width-1-2 uk-child-width-1-4 uk-text-center" uk-grid>
             {% for test in tests %}
+            {% if not test.passed %}
             <li data-level="{{test.level}}" data-subject="{{test.subject}}" data-avalibility="avalible">
 
                 <a href="/quiz/{{test.name}}" class="uk-link-reset">
@@ -83,9 +84,23 @@
                             <p class="uk-text-truncate">{{test.name}}</p>
                             <p class="uk-text-truncate">{{test.description}}</p>
                         </div>
+                        <div class="uk-card-fuuter">
+                            {% if test.game_mode == '1' %}
+                            <p class="uk-text-truncate">Все сразу</p>
+                            {% elif test.game_mode == '2' %}
+                            <p class="uk-text-truncate">Вопрос за вопросом</p>
+                            {% elif test.game_mode == '3' %}
+                            <p class="uk-text-truncate">По командам (все сразу)</p>
+                            {% else %}
+                            <p class="uk-text-truncate">По командам (вопрос за вопросом)</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </a>
+
+
             </li>
+            {% endif %}
             {% endfor %}
 
         </ul>
