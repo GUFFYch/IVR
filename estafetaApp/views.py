@@ -362,7 +362,7 @@ def reg_page(request):
 
 # login function
 def login_page(request):
-
+    
     if request.method == 'POST' and 'btnform2' in request.POST:
         email = request.POST.get('email')
         password = request.POST.get('password')
