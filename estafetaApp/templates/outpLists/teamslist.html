@@ -1,20 +1,18 @@
-<!-- <p>{{teams}}</p> -->
 
 {% for team in teams %}
 <div class="uk-card uk-flex uk-flex-between uk-width-1">
     <h3>{{team.name}}</h>
-        <a class="uk-button uk-label uk-label-success uk-button-link" href="#join-submition-{{team.name}}" uk-toggle> Вступить
-        </a>
+        <a class="uk-button uk-label uk-label-success uk-button-link" href="#join-submition-{{team.id}}" uk-toggle> Вступить</a>
 </div>
 <div uk-margin>
 
-    <div id="join-submition-{{team.name}}" uk-modal>
+    <div id="join-submition-{{team.id}}" uk-modal>
         <div class="uk-modal-dialog">
             <form method="POST" class="uk-form-horizontal uk-margin-large">
 
                 <button class="uk-modal-close-default" type="button" uk-close></button>
                 <div class="uk-modal-header">
-                    <h2 class="uk-modal-title">join {{team.name}}</h2>
+                    <h2 class="uk-modal-title">Присоедениться к <b>{{team.name}}</b></h2>
                 </div>
                 <div class="uk-modal-body">
 

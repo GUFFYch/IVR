@@ -4,7 +4,6 @@
             <tr>
                 <th>Имя пользователя</th>
                 <th>Количество баллов</th>
-                <th>Процент корректности</th>
                 {% for question in questions %}
                 <th>Вопрос №{{question}}</th>
                 {% endfor %}
@@ -15,7 +14,6 @@
             <tr>
                 <td>{{user.user}}</td>
                 <td>{{user.user_score}} из {{user.max_score}}</td>
-                <td>{{user.user_correction}}%</td>
                 {% for answer in user.answers %}
                 <td>{{answer}}</td>
                 {% endfor %}

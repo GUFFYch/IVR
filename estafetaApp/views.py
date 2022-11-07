@@ -137,6 +137,7 @@ def infoTest_page(request, name):
     # print(content['tests'])
     return render(request, 'outpLists/showstatics.html', content)
 def removeTest_page(request, name):
+    Questions.objects.get(test_name=name).delete()
     Tests.objects.get(name=name).delete()
     return HttpResponseRedirect('/finishtest/')
 
