@@ -92,8 +92,7 @@ def profileTemplate_page(request, name):
         path = f"profile/template{name}.html"
         user = Account.objects.get(email=request.user)
         if user.team:
-            team = Team.objects.get(name=user.team)
-            content['team'] = team
+            content['team_members'] = [i for i in Account.objects.filter(team=user.team)]
         else:
             content['team'] = ""
         return render(request, path, content)
