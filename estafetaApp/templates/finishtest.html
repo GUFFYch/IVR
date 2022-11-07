@@ -26,34 +26,15 @@
                         <input type="text" name="name" placeholder="name of test" id="searchPole"
                             class="uk-input uk-width-5-6" maxlength="100" required>
                     </div>
-                    <div class="uk-width-1-2" id="testsList">
-
-                    </div>
+                    
                 </div>
+                <hr>
+                    <div class="uk-width-1" id="testsList">
+                       
+                    </div>
             </fieldset>
         </div>
-        <div class="uk-width-3-5" style="margin: 2% auto">
-            {% csrf_token %}
-            <!-- <div uk-form-custom="target: true" class="uk-wid">
-                <input type="file">
-                <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" name="excel_file"
-                    required="required">
-            </div>
-            <button class="uk-button uk-button-default" name="Upload" type="submit">Submit</button> -->
-            <hr>
 
-            <input type="file"
-                   title="Upload excel file"
-                   name="excel_file"
-                   style="border: 1px solid black; padding: 5px;"
-                   required="required">
-            <p>
-            <input type="submit"
-                   value="Upload"
-                   style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
-
-            
-        </div>
     </form>
 
 
@@ -65,6 +46,7 @@
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.6/dist/js/uikit-icons.min.js"></script>
 <script>
+
     $("#searchPole").on('input', function () {
         var xhr = new XMLHttpRequest()
         if (this.value) {
@@ -75,4 +57,5 @@
             xhr.send()
         }
     });
+
 </script>

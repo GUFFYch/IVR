@@ -31,6 +31,8 @@ urlpatterns = [
     path('results/<name>', views.resultstest_page),
     path('searchteam/<name>/', views.searchTeam_page),
     path('searchtest/<name>/', views.searchTest_page),
+    path('infotest/<name>/', views.infoTest_page),
+    path('removetest/<name>/', views.removeTest_page),
     # path('profile/<id>', views.profile_sertain_page),
     path('createtest/', views.createtest_page),
     path('finishtest/', views.finishtest_page),

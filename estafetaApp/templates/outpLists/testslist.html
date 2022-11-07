@@ -2,7 +2,25 @@
 <form class="uk-grid" uk-grid>
     {% for test in tests %}
     {% if test.is_active %}
-        <label><input class="uk-radio" type="radio" value="{{test.id}}" name="testId" checked> {{test.name}}</label>
+    <label>
+        <input class="uk-radio test-choser" type="radio" value="{{test.name}}" name="testId"> {{test.name}}
+    </label>
     {% endif %}
     {% endfor %}
 </form>
+<hr>
+<div id="showTable">
+
+</div>
+<script>
+    $('input[type=radio][name=testId]').on('click', function () {
+        $('#finishTest').value = this.value
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', `/infotest/${this.value}/`)
+        xhr.onload = function () {
+            $('#showTable').html(xhr.response)
+        }
+        xhr.send()
+        
+    });
+</script>

@@ -112,6 +112,34 @@ def searchTest_page(request, name):
     print(content['tests'])
     return render(request, 'outpLists/testslist.html', content)
 
+def infoTest_page(request, name):
+    content = {}
+    test = Tests.objects.get(name=name)
+    quest = Questions.objects.get(test_name=name)
+    users_indexes = list(filter(None, test.users_passed.split(' | ')))
+    users = [Account.objects.get(id=i).first_name for i in users_indexes]
+    answers_arr = list(filter(None, test.users_answers.split(' | ')))
+    scores_arr = list(filter(None, test.users_marks.split(' | ')))
+    print(scores_arr, test.max_score)
+    question_amount = quest.question_amount
+    question_answers = list(filter(None, quest.test_answer.split(",")))
+    content['test'] = test
+    content['questions'] = [i+1 for i in range(quest.question_amount)]
+    content['users'] = [{
+        'user':users[i],
+        'answers': [i for i in answers_arr[question_amount*i:question_amount*(i+1)]],
+        'question_amount':quest.question_amount,
+        'question_answers':question_answers,
+        'max_score':test.max_score,
+        'user_score':scores_arr[i],
+        'user_correction':math.ceil(int(scores_arr[i]) * 100 / int(quest.question_amount)),
+    } for i in range(len(users_indexes))]
+    # print(content['tests'])
+    return render(request, 'outpLists/showstatics.html', content)
+def removeTest_page(request, name):
+    Tests.objects.get(name=name).delete()
+    return HttpResponseRedirect('/finishtest/')
+
 # func to create test
 def createtest_page(request):
     if request.user.is_authenticated:
@@ -119,12 +147,14 @@ def createtest_page(request):
             test_text = ''
             test_answer = ''
             test_score = ''
+            max_score = 0
             amount = 0
             for i in range(int(request.POST['amount'])):
                 amount += i
                 test_text += str(request.POST[f'question_{i}_text']) + ','
                 test_answer += str(request.POST[f'question_{i}_ans']) + ','
                 test_score += str(request.POST[f'question_{i}_score']) + ','
+                max_score += int(request.POST[f'question_{i}_score'])
            
             test = Tests()
             question = Questions()
@@ -140,7 +170,7 @@ def createtest_page(request):
             question.test_score = test_score
             question.question_amount = int(request.POST['amount'])
             test.question_amount = int(request.POST['amount'])
-            test.max_score = 0
+            test.max_score = max_score
             question.save()
             test.save()
             return HttpResponseRedirect('/createtest/')
@@ -157,33 +187,33 @@ def test_apge(request, name):
         return HttpResponseRedirect(f'/results/{name}')
     content = {}
     if request.user.is_authenticated:
-        questions = []
         content['questions'] = [{
                                 'test_text':list(filter(None,quest.test_text.split(",")))[i],
                                 'test_score':int(list(filter(None,quest.test_score.split(",")))[i]),
-                                'test_number': i+1
+                                'test_number': i+1,
                                 } for i in range(quest.question_amount) ]    
 
         if request.method == 'POST' and 'saveAns':
             answers = test.users_answers
-            teams_passed = list(filter(None,set(test.teams_passed.split(" | ") + [request.user.team])))
-            index = teams_passed.index(request.user.team)
-            teams_mark = test.teams_mark.split(" | ")
+            teams_passed = list(filter(None, set(test.teams_passed.split(' | ') + [request.user.team])))
+            teams_mark = test.teams_mark.split(' | ')
             score = 0
             for i in range(quest.question_amount):
                 user_ans = request.POST[f'test_{i + 1}_answer'].strip()
                 correction = 1 if user_ans == list(filter(None,quest.test_answer.split(",")))[i].strip() else 0
                 answers += f'{user_ans}//{correction} | '
                 score += int(list(filter(None,quest.test_score.split(",")))[i]) if correction else 0
-            if teams_mark[index] == '':
-                teams_mark[index] = f'{score}'
-            else:
-                print(teams_mark[index], teams_mark, sep=" |||| ")
-                teams_mark[index] = str(int(teams_mark[index]) +  score )
-            test.teams_passed = ' | '.join(teams_passed)
-            test.teams_mark = ' | '.join(teams_mark)
+            if test.game_mode in ['3', '4']:
+                team_index = teams_passed.index(request.user.team)
+                if teams_mark[team_index] == '':
+                    teams_mark[team_index] = f'{score}'
+                    test.teams_passed = ' | '.join(teams_passed)
+                    test.teams_mark = ' | '.join(teams_mark)
+                else:
+                    teams_mark[team_index] = str(int(teams_mark[team_index]) +  score )
             test.users_passed += f'{request.user.id} | '
             test.users_answers = answers
+            test.users_marks += f'{score} | '
             test.save()
             return HttpResponseRedirect(f'/results/{name}')
 
@@ -240,15 +270,7 @@ def resultstest_page(request, name):
 # function for deleting tests
 def finishtest_page(request):
     if request.user.is_authenticated:
-        if request.method == 'POST':
-            print(request.POST)
-
-            test = Tests.objects.get(id = request.POST['testId'])
-            test.is_active = False
-
-            test.save()
-
-            return HttpResponseRedirect('/finishtest/')
+        
         return render(request, 'finishtest.html')
     return render(request, 'notadmin.html')
 
