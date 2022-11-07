@@ -119,14 +119,12 @@ def createtest_page(request):
             test_text = ''
             test_answer = ''
             test_score = ''
-            test_time = ''
             amount = 0
             for i in range(int(request.POST['amount'])):
                 amount += i
                 test_text += str(request.POST[f'question_{i}_text']) + ','
                 test_answer += str(request.POST[f'question_{i}_ans']) + ','
                 test_score += str(request.POST[f'question_{i}_score']) + ','
-                test_time += str(request.POST[f'question_{i}_time']) + ','
            
             test = Tests()
             question = Questions()
@@ -140,7 +138,6 @@ def createtest_page(request):
             question.test_text = test_text
             question.test_answer = test_answer
             question.test_score = test_score
-            question.test_time = test_time
             question.question_amount = int(request.POST['amount'])
             test.question_amount = int(request.POST['amount'])
             test.max_score = 0
@@ -164,7 +161,6 @@ def test_apge(request, name):
         content['questions'] = [{
                                 'test_text':list(filter(None,quest.test_text.split(",")))[i],
                                 'test_score':int(list(filter(None,quest.test_score.split(",")))[i]),
-                                'test_time':int(list(filter(None,quest.test_time.split(",")))[i]),
                                 'test_number': i+1
                                 } for i in range(quest.question_amount) ]    
 
@@ -206,7 +202,6 @@ def resultstest_page(request, name):
     content['questions'] = [{
                             'test_text':list(filter(None,quest.test_text.split(",")))[i],
                             'test_score':int(list(filter(None,quest.test_score.split(",")))[i]),
-                            'test_time':int(list(filter(None,quest.test_time.split(",")))[i]),
                             'test_number': i,
                             'user_answer': answers_arr[i + quest.question_amount*user_index].strip().split('//')[0],
                             'user_correction': answers_arr[i + quest.question_amount*user_index].strip().split('//')[-1],
@@ -224,6 +219,16 @@ def resultstest_page(request, name):
         indexes = [ test.users_passed.split(' | ').index(i) for i in team_users]
         # arr with team stats
         content['team'] = [{
+            'first_name' : Account.objects.get(id=test.users_passed.split(' | ')[i]).first_name,
+            'score' : sum([int(list(filter(None,quest.test_score.split(",")))[j]) if answers_arr[j + quest.question_amount*i].strip().split('//')[0] == answers_arr[j + quest.question_amount*i].strip().split('//')[-1] else 0 for j in range(quest.question_amount)]),
+            'percentage': math.ceil(sum([int(list(filter(None,quest.test_score.split(",")))[j]) if answers_arr[j + quest.question_amount*i].strip().split('//')[0] == answers_arr[j + quest.question_amount*i].strip().split('//')[-1] else 0 for j in range(quest.question_amount)]) * 100 / sum([int(list(filter(None,quest.test_score.split(",")))[i]) for i in range(quest.question_amount)])),
+
+        } for i in indexes]
+    else:
+        users = [i for i in list(filter(None,test.users_passed.split(' | ')))]
+        indexes = [ test.users_passed.split(' | ').index(i) for i in users]
+        # arr with team stats
+        content['users_pass'] = [{
             'first_name' : Account.objects.get(id=test.users_passed.split(' | ')[i]).first_name,
             'score' : sum([int(list(filter(None,quest.test_score.split(",")))[j]) if answers_arr[j + quest.question_amount*i].strip().split('//')[0] == answers_arr[j + quest.question_amount*i].strip().split('//')[-1] else 0 for j in range(quest.question_amount)]),
             'percentage': math.ceil(sum([int(list(filter(None,quest.test_score.split(",")))[j]) if answers_arr[j + quest.question_amount*i].strip().split('//')[0] == answers_arr[j + quest.question_amount*i].strip().split('//')[-1] else 0 for j in range(quest.question_amount)]) * 100 / sum([int(list(filter(None,quest.test_score.split(",")))[i]) for i in range(quest.question_amount)])),
@@ -259,7 +264,6 @@ def main_page(request):
                 'is_active':test.is_active,
                 'game_mode':test.game_mode,
                 'question_amount':test.question_amount,
-                'test_time':test.test_time,
                 'max_score':test.max_score,
                 'passed': 1 if str(request.user.id) in test.users_passed.split(' | ') else 0
             } for test in tests]
@@ -280,7 +284,6 @@ def resultsall_page(request):
                 'is_active':test.is_active,
                 'game_mode':test.game_mode,
                 'question_amount':test.question_amount,
-                'test_time':test.test_time,
                 'max_score':test.max_score,
                 'passed': 1 if str(request.user.id) in test.users_passed.split(' | ') else 0
             } for test in tests]        

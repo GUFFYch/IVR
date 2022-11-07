@@ -27,7 +27,6 @@ class Questions(models.Model):
     test_text = models.CharField(max_length=10000) # текст вопроса
     test_answer = models.CharField(max_length=10000) # овтет на вопрос
     test_score = models.CharField(max_length=10000) # кол-во баллов за тест
-    test_time = models.CharField(max_length=10000)# время на вопрсо
 
 class Team(models.Model):
     name = models.CharField(max_length=100, unique=True) # название

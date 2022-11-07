@@ -95,24 +95,18 @@
                     <textarea id="Qtext" class="uk-input" maxlength="500"></textarea>
                 </div>
 
+                <div class="uk-width-2-5">
+                    <label>Ответ</label>
+                    <br>
+                    <br>
+                    <input id="Qans" class="uk-input" type="input">
+                </div>
+
                 <div class="uk-width-1-5">
                     <label>Количество баллов</label>
                     <br>
                     <br>
                     <input id="Qscore" class="uk-input" type="number">
-                </div>
-
-                <div class="uk-width-1-5">
-                    <label>Cекунд на вопрос</label>
-                    <br>
-                    <br>
-                    <input id="Qtime" class="uk-input" type="number">
-                </div>
-                <div class="uk-width-1-5">
-                    <label>Ответ</label>
-                    <br>
-                    <br>
-                    <input id="Qans" class="uk-input" type="input">
                 </div>
             </div>
             <div class="uk-text-right uk-margin-medium-bottom">
@@ -147,14 +141,12 @@
         text = document.getElementById('Qtext').value;
         ans = document.getElementById('Qans').value;;
         score = document.getElementById('Qscore').value;
-        time = document.getElementById('Qtime').value;
         amount = document.getElementById('amount');
-        if (text.trim().length > 0 || score.trim().length > 0 || time.trim().length > 0) {
+        if (text.trim().length > 0 && score.trim().length > 0) {
             let $inputGroup = `<div class="uk-flex uk-flex-middle uk-margin-remove-top uk-margin-small-bottom" uk-grid>
                     <textarea class="uk-textarea uk-width-1" name="question_${num}_text" readonly value="${text}">${text}</textarea>
                     <input class="uk-input uk-width-1 uk-margin-remove" name="question_${num}_ans" type="text" value="${ans}">
                     <input class="uk-input uk-width-1-2 uk-margin-remove" name="question_${num}_score" type="number" value="${score}">
-                    <input class="uk-input uk-width-1-2 uk-margin-remove" name="question_${num}_time" type="number" value="${time}">
                 </div>`;
             document.getElementById("questionPole").insertAdjacentHTML("beforeend", $inputGroup);
             amount.value = num + 1
